@@ -10,7 +10,24 @@ let database = ['greeting card', 'wagon', 'computer', 'table', 'chair', 'milk', 
 'conditioner', 'rusty nail', 'desk']
 
 app.get("/api/inventory", (req, res) => {
-    res.status(200).send(database)
+    let item = req.query.item
+
+    if(item) {
+        item = item.toLowerCase()
+        let responseArr = []
+        for (let i = 0; i < database.length; i++) {
+            if(database[i].includes(item)) {
+                responseArr.push(database[i])
+            }
+        }
+        res.status(200).send(responseArr)
+    } else {
+        res.status(200).send(database)
+    }
+
+
+
+    
 })
 
 app.get("/api/inventory/:id", (req, res) => {
